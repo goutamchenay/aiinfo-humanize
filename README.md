@@ -20,7 +20,27 @@ piece of attached metadata is dropped:
 EXIF orientation is applied to the pixels before stripping, so photos don't turn sideways.
 PNG output is lossless, and pixels are identical to the original.
 
-## Install
+## Web version (Cloudflare Pages)
+
+The `web/` folder is a static, dependency-free web app with the same scan/clean
+features. Everything runs in the browser and images are never uploaded. Instead of
+re-encoding, it cuts metadata blocks out of the PNG / JPEG / WebP file structure, so
+pixels stay byte-for-byte identical, even for JPEG. EXIF orientation is kept as a
+minimal one-tag EXIF block, so photos don't rotate.
+
+Deploy on Cloudflare Pages:
+
+1. Cloudflare dashboard → **Workers & Pages** → **Create** → **Pages** → **Connect to Git**, then pick this repo.
+2. Framework preset: **None**. Build command: *(leave empty)*. Build output directory: **`web`**.
+3. **Save and Deploy**. Every push to `main` redeploys automatically.
+
+`web/_headers` sets a strict Content-Security-Policy (`connect-src 'none'`), so the
+page cannot send image data anywhere.
+
+Run locally: `cd web && python3 -m http.server 8000`, then open http://localhost:8000.
+Tests: `cd web && npm test` (Node 18+, no dependencies).
+
+## Install (Python CLI)
 
 ```bash
 pip install git+https://github.com/sizuelboro/aiinfo-humanize
