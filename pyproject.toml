@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aiinfo-humanize"
+version = "0.1.0"
+description = "Inspect and strip AI-provenance metadata (C2PA, EXIF, XMP, PNG text) from images"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = ["Pillow>=9.0"]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[project.scripts]
+aiinfo = "aiinfo_humanize.cli:main"
+
+[tool.setuptools]
+packages = ["aiinfo_humanize"]
